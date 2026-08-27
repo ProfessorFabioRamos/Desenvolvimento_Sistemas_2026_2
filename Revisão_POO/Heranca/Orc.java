@@ -8,4 +8,18 @@ public class Orc extends Enemy{
         this.nome = nome;
         this.classeArmadura = ca;
     }
+
+    @Override
+    public void emitirSom(){
+        super.emitirSom();
+        System.out.printf("Meu nome é %s, e vou te matar!\n",
+                nome);
+    }
+
+    @Override
+    public void tomarDano(int dano){
+        int danoFinal = dano - classeArmadura;
+        if(danoFinal < 1) danoFinal = 0;
+        super.tomarDano(danoFinal);
+    }
 }
