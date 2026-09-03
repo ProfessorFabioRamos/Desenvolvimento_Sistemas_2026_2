@@ -2,8 +2,10 @@ package enemy.humanoid;
 
 import enemy.Enemy;
 import interfaces.IAgrupar;
+import interfaces.IZombie;
+//import interfaces.*;
 
-public class Orc extends Enemy{
+public class Orc extends Enemy implements IAgrupar, IZombie{
     protected String nome;
     protected int classeArmadura;
 
@@ -31,5 +33,38 @@ public class Orc extends Enemy{
     @Override
     public void atacar(){
         System.out.println("Dano causado: "+damage);
+    }
+
+    @Override
+    public void agruparComRaca(int quantidade) {
+        System.out.printf("Tamanho do grupo: %d\n", quantidade);
+    }
+
+    @Override
+    public void setNomeCla(String nomeCla) {
+        System.out.printf("Nome do clã: %s\n", nomeCla);
+    }
+
+    @Override
+    public void mudarRaca() {
+        raca = raca+" Zombie";
+    }
+
+    @Override
+    public void reduzirDeslocamento() {
+        speed = speed/2;
+    }
+
+    @Override
+    public void infectar() {
+        atacar();
+        System.out.println("Alvo do ataque foi infectado");
+    }
+
+    @Override
+    public void regeneracao() {
+        int hpMaximo = hp;
+        hp+=5;
+        if(hp > hpMaximo) hp = hpMaximo;
     }
 }
