@@ -3,24 +3,23 @@ package enemy.humanoid;
 import enemy.Enemy;
 import interfaces.IAgrupar;
 import interfaces.IZombie;
-//import interfaces.*;
 
-public class Orc extends Enemy implements IAgrupar, IZombie{
+public class Orc extends Enemy implements IAgrupar, IZombie {
     protected String nome;
     protected int classeArmadura;
 
-    public Orc(int hp, int damage,
-               double speed, String nome, int ca){
-        super("enemy.humanoid.Orc", hp, damage, speed);
+    public Orc(int hp, int damage,double speed,
+               String nome, int ca){
+        super("Orc",hp,damage,speed);
         this.nome = nome;
         this.classeArmadura = ca;
     }
 
     @Override
     public void emitirSom(){
-        super.emitirSom();
         System.out.printf("Meu nome é %s, e vou te matar!\n",
                 nome);
+        super.emitirSom();
     }
 
     @Override
@@ -37,22 +36,23 @@ public class Orc extends Enemy implements IAgrupar, IZombie{
 
     @Override
     public void agruparComRaca(int quantidade) {
-        System.out.printf("Tamanho do grupo: %d\n", quantidade);
+        System.out.printf("Tamanho do grupo: %d",quantidade);
     }
 
     @Override
     public void setNomeCla(String nomeCla) {
-        System.out.printf("Nome do clã: %s\n", nomeCla);
+        System.out.printf("Nome do clã: %s",nomeCla);
     }
 
     @Override
     public void mudarRaca() {
-        raca = raca+" Zombie";
+        raca = raca + "Zombie";
     }
 
     @Override
     public void reduzirDeslocamento() {
-        speed = speed/2;
+        //speed = speed / 2;
+        speed /= 2;
     }
 
     @Override
@@ -65,6 +65,6 @@ public class Orc extends Enemy implements IAgrupar, IZombie{
     public void regeneracao() {
         int hpMaximo = hp;
         hp+=5;
-        if(hp > hpMaximo) hp = hpMaximo;
+        if(hp >hpMaximo) hp = hpMaximo;
     }
 }
