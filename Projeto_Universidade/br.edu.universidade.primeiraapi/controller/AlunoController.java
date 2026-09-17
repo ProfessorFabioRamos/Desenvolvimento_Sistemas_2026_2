@@ -21,6 +21,7 @@ public class AlunoController {
     public List<Aluno> listarTodos() {return alunos;}
 
     // Metodo POST HTTP que cria um aluno e adiciona na lista
+    @PostMapping
     public ResponseEntity<Aluno> criarAluno(@RequestBody Aluno novoAluno) {
         // Atribui o Id simulado e incrementa para o próximo
         novoAluno.setId(proximoId++);
