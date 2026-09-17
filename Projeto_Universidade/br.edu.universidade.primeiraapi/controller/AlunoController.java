@@ -31,3 +31,10 @@ public class AlunoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(novoAluno);
     }
 }
+/*
+{
+    "nome":"Leon Kennedy",
+    "matricula":"2024002",
+    "curso":"Ciência da Computação"
+}
+ */
