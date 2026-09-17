@@ -13,4 +13,12 @@ import java.util.List;
 public class AlunoController {
     // Simulação de tabela (banco)
     private List<Aluno> alunos = new ArrayList<>();
+    // Simulação do contador auto-incremental do BD
+    private long proximoId = 1;
+    
+    // Metodo GET HTTP que retorna a lista
+    @GetMapping
+    public List<Aluno> listarTodos() {return alunos;}
+
+    // Metodo POST HTTP que cria um aluno e adiciona na lista
 }
