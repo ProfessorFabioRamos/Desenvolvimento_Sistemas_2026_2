@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/alunos") //Define a rota base
+@RequestMapping("/api/v1/alunos") //Define a rota base (Padrão REST)
 public class AlunoController {
     // Simulação de tabela (banco)
     private List<Aluno> alunos = new ArrayList<>();
@@ -19,6 +20,20 @@ public class AlunoController {
     // Metodo GET HTTP que retorna a lista
     @GetMapping
     public List<Aluno> listarTodos() {return alunos;}
+
+    // Metodo GET HTTP por ID (aluno específico)
+    @GetMapping("/{id}")
+    public ResponseEntity<Aluno> buscarPorId(@PathVariable long id) {
+        //Utilizamos a API de Streams do Java para buscar o aluno na lista
+        Optional<Aluno> alunoEncontrado = alunos.stream()
+                .filter(aluno -> aluno.getId().equals(id))
+                .findFirst();
+        // Se encontrado, retorna 200(OK). Se não retorna 404(Not Found)
+        if(alunoEncontrado.isPresent()) {
+            return new ResponseEntity<>(alunoEncontrado.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
     // Metodo POST HTTP que cria um aluno e adiciona na lista
     @PostMapping
