@@ -45,6 +45,23 @@ public class AlunoController {
         // Retorna status 201 (Created) e o objeto criado com o novo Id
         return ResponseEntity.status(HttpStatus.CREATED).body(novoAluno);
     }
+
+    // Metodo PUT HTTP atualiza um aluno existente de forma integral por ID
+    @PutMapping("/{id}")
+    public ResponseEntity<Aluno> atualizarAluno(
+            @PathVariable Long id, @RequestBody Aluno alunoAtualizado){
+        for (Aluno aluno : alunos) {
+            if(aluno.getId().equals(id)) {
+                aluno.setNome(alunoAtualizado.getNome());
+                aluno.setMatricula(alunoAtualizado.getMatricula());
+                aluno.setCurso(alunoAtualizado.getCurso());
+
+                // Retorna 200(OK) com os dados atualizados
+                return ResponseEntity.ok(aluno);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
 /*
 {
