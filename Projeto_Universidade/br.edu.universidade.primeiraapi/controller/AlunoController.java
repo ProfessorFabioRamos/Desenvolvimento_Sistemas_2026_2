@@ -63,6 +63,7 @@ public class AlunoController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    // Remove um aluno da lista
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarAluno(@PathVariable Long id) {
         // removeIf retorna true se encontrou e removeu o item
@@ -73,6 +74,34 @@ public class AlunoController {
             return ResponseEntity.noContent().build();
         }
         // Se não encontrou o ID para deletar, retorna 404 Not Found
+        return ResponseEntity.notFound().build();
+    }
+
+    // Atualiza parcialmente os dados de um aluno existente
+    @PatchMapping("/{id}")
+    public ResponseEntity<Aluno> atualizarParcial(
+            @PathVariable Long id, @RequestBody Aluno alunoAtualizado){
+        Optional<Aluno> alunoEncontrado = alunos.stream()
+                .filter(aluno -> aluno.getId().equals(id))
+                .findFirst();
+
+        if(alunoEncontrado.isPresent()) {
+            Aluno aluno = alunoEncontrado.get();
+
+            // Verifica cada campo. Se não for nulo, é atualizado
+            if(alunoAtualizado.getNome() != null) {
+                aluno.setNome(alunoAtualizado.getNome());
+            }
+            if(alunoAtualizado.getMatricula() != null) {
+                aluno.setMatricula(alunoAtualizado.getMatricula());
+            }
+            if(alunoAtualizado.getCurso() != null) {
+                aluno.setCurso(alunoAtualizado.getCurso());
+            }
+            // Retorna 200 OK com o aluno atualizado
+            return ResponseEntity.ok(aluno);
+        }
+        // Retorna 404 Not Found se não encontrar o registro
         return ResponseEntity.notFound().build();
     }
 }
