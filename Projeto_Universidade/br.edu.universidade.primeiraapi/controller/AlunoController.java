@@ -62,6 +62,19 @@ public class AlunoController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarAluno(@PathVariable Long id) {
+        // removeIf retorna true se encontrou e removeu o item
+        boolean removido = alunos.removeIf(aluno -> aluno.getId().equals(id));
+
+        if(removido) {
+            // Retorna 204 No Content (sucesso na remoção, não tem corpo de resposta)
+            return ResponseEntity.noContent().build();
+        }
+        // Se não encontrou o ID para deletar, retorna 404 Not Found
+        return ResponseEntity.notFound().build();
+    }
 }
 /*
 {
