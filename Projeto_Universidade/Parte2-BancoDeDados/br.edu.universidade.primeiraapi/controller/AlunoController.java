@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import br.edu.universidade.primeiraapi.repository.AlunoRepository;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,8 +40,6 @@ public class AlunoController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////
-    // ULTIMO ALTERADO POST
     // Metodo POST HTTP que cria um aluno e adiciona na lista
     @PostMapping
     public ResponseEntity<Aluno> criarAluno(@RequestBody Aluno novoAluno) {
@@ -54,40 +52,32 @@ public class AlunoController {
     @PutMapping("/{id}")
     public ResponseEntity<Aluno> atualizarAluno(
             @PathVariable Long id, @RequestBody Aluno alunoAtualizado){
-        for (Aluno aluno : alunos) {
-            if(aluno.getId().equals(id)) {
-                aluno.setNome(alunoAtualizado.getNome());
-                aluno.setMatricula(alunoAtualizado.getMatricula());
-                aluno.setCurso(alunoAtualizado.getCurso());
-
-                // Retorna 200(OK) com os dados atualizados
-                return ResponseEntity.ok(aluno);
-            }
+        if(!repository.existsById(id)){
+            return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        // Garante que o Id não será alterado e atualiza o banco
+        alunoAtualizado.setId(id);
+        // save() também faz update
+        Aluno alunoSalvo = repository.save(alunoAtualizado);
+        return ResponseEntity.ok(alunoSalvo);
     }
 
     // Remove um aluno da lista
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarAluno(@PathVariable Long id) {
-        // removeIf retorna true se encontrou e removeu o item
-        boolean removido = alunos.removeIf(aluno -> aluno.getId().equals(id));
-
-        if(removido) {
-            // Retorna 204 No Content (sucesso na remoção, não tem corpo de resposta)
-            return ResponseEntity.noContent().build();
+        if(!repository.existsById(id)){
+            return ResponseEntity.notFound().build();
         }
-        // Se não encontrou o ID para deletar, retorna 404 Not Found
-        return ResponseEntity.notFound().build();
+        //
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     // Atualiza parcialmente os dados de um aluno existente
     @PatchMapping("/{id}")
     public ResponseEntity<Aluno> atualizarParcial(
             @PathVariable Long id, @RequestBody Aluno alunoAtualizado){
-        Optional<Aluno> alunoEncontrado = alunos.stream()
-                .filter(aluno -> aluno.getId().equals(id))
-                .findFirst();
+        Optional<Aluno> alunoEncontrado = repository.findById(id);
 
         if(alunoEncontrado.isPresent()) {
             Aluno aluno = alunoEncontrado.get();
@@ -102,10 +92,12 @@ public class AlunoController {
             if(alunoAtualizado.getCurso() != null) {
                 aluno.setCurso(alunoAtualizado.getCurso());
             }
-            // Retorna 200 OK com o aluno atualizado
-            return ResponseEntity.ok(aluno);
+
+            // Salva as alterações no banco
+            Aluno alunoSalvo = repository.save(aluno);
+            return ResponseEntity.ok(alunoSalvo);
         }
-        // Retorna 404 Not Found se não encontrar o registro
+        // Retorna 404 Not Found se não encontrar o Id
         return ResponseEntity.notFound().build();
     }
 }
