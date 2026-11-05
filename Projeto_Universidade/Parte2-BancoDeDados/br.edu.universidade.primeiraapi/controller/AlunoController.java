@@ -105,6 +105,9 @@ public class AlunoController {
 {
     "nome":"Leon Kennedy",
     "matricula":"2024002",
-    "curso":"Ciência da Computação"
+    "curso":"Ciência da Computação",
+    "departamento":{
+        "id": 1
+    }
 }
  */
