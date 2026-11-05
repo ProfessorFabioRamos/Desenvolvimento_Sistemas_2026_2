@@ -42,3 +42,14 @@ public class Aluno {
     public Departamento getDepartamento() {return departamento;}
     public void setDepartamento(Departamento departamento) {this.departamento = departamento;}
 }
+
+/*
+SELECT
+a.id AS aluno_id,
+a.nome AS aluno_nome,
+a.curso,
+d.nome_departamento AS departamento_nome,
+d.sigla
+FROM aluno a
+INNER JOIN departamento d ON a.departamento_id = d.ids
+*/
