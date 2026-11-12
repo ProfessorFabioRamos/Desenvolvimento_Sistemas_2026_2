@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class TelaCadastro extends JFrame {
     private JTextField txtNome;
@@ -19,6 +20,31 @@ public class TelaCadastro extends JFrame {
         painelMatricula.setBorder(BorderFactory.createEmptyBorder(
                 20,20,20,20));
 
+        painelMatricula.add(new JLabel("Nome:"));
+        txtNome = new JTextField();
+        painelMatricula.add(txtNome);
+
+        painelMatricula.add(new JLabel("Matricula:"));
+        txtMatricula = new JTextField();
+        painelMatricula.add(txtMatricula);
+
+        painelMatricula.add(new JLabel("Curso:"));
+        txtCurso = new JTextField();
+        painelMatricula.add(txtCurso);
+
+        painelMatricula.add(new JLabel("Departamento ID:"));
+        txtDepartamentoId = new JTextField();
+        painelMatricula.add(txtDepartamentoId);
+
+        JButton btnMatricular= new JButton("Confirmar Matricula");
+        btnMatricular.addActionListener(e -> processarMatricula());
+        painelMatricula.add(btnMatricular);
+
+        add(painelMatricula,BorderLayout.CENTER);
         setLocationRelativeTo(null);
+    }
+
+    public void processarMatricula() {
+        // Criar o objeto da classe Aluno e adicionar no banco diretamente
     }
 }
