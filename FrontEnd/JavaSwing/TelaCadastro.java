@@ -11,12 +11,12 @@ public class TelaCadastro extends JFrame {
     public TelaCadastro() {
         // Configurações básicas da janela
         setTitle("Matrícula Aula");
-        setSize(600,300);
+        setSize(800,600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         //Criar o painel e os componenentes
         JPanel painelMatricula = new JPanel(new GridLayout(
-                3,2,5,15));
+                5,2,5,15));
         painelMatricula.setBorder(BorderFactory.createEmptyBorder(
                 20,20,20,20));
 
@@ -36,6 +36,7 @@ public class TelaCadastro extends JFrame {
         txtDepartamentoId = new JTextField();
         painelMatricula.add(txtDepartamentoId);
 
+
         JButton btnMatricular= new JButton("Confirmar Matricula");
         btnMatricular.addActionListener(e -> processarMatricula());
         painelMatricula.add(btnMatricular);
@@ -45,6 +46,9 @@ public class TelaCadastro extends JFrame {
     }
 
     public void processarMatricula() {
-        // Criar o objeto da classe Aluno e adicionar no banco diretamente
+        String nome = txtNome.getText();
+        String matricula = txtMatricula.getText();
+        String curso = txtCurso.getText();
+        int departamentoId = Integer.parseInt(txtDepartamentoId.getText());
     }
 }
